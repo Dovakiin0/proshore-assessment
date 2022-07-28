@@ -1,4 +1,3 @@
-from typing import final
 from flask import jsonify, request
 from ..models.blogs import Blogs, blog_schema, blogs_schema
 from ..models import db
@@ -24,6 +23,25 @@ def add_blogs():
         except:
             return jsonify({"message": "Error adding blog"}), 500
 
+def bulk_add():
+    '''
+        bulk adds blogs
+    '''
+    data = request.json
+    db.session.expunge_all()
+    for blog in data:
+        blogs = Blogs(
+            title=blog['title'],
+            description=blog['description'],
+            image_url=blog['image_url'],
+            author_name=blog['author_name'],
+            author_description=blog['author_description'],
+            reading_time=blog['reading_time']
+        )
+        db.session.add(blogs)
+    db.session.commit()
+    return jsonify({"message": "Blogs added successfully"}), 201
+
 def get_all_blogs():
     '''
         returns all blogs with pagination
@@ -32,7 +50,7 @@ def get_all_blogs():
     page = request.args.get('page', 1, type=int)
     limit = request.args.get('limit', 10, type=int)
 
-    blogs = Blogs.query.paginate(page, limit, error_out=False)
+    blogs = Blogs.query.order_by(Blogs.id).paginate(page, limit, error_out=False)
     if not blogs.items:
         return jsonify({"message": "No blogs found"}), 404
     
