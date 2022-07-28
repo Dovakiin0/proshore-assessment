@@ -55,13 +55,13 @@ def get_all_blogs():
         return jsonify({"message": "No blogs found"}), 404
     
     result = blogs_schema.dump(blogs.items)
-    return jsonify({"data": result, "next": blogs.next_num, "prev": blogs.prev_num}), 200
+    return jsonify({"data": result, "next": blogs.next_num, "prev": blogs.prev_num, "total": blogs.total}), 200
 
 def get_single_blog(id):
     '''
         returns a single blog
     '''
-    blogs = Blogs.query.get_or_404(id)
+    blogs = Blogs.query.get(id)
     if not blogs:
         return jsonify({"message": "Blog not found"}), 404
     result = blog_schema.dump(blogs)
@@ -71,7 +71,7 @@ def update_blogs(id):
     '''
         updates a blog
     '''
-    blogs = Blogs.query.get_or_404(id)
+    blogs = Blogs.query.get(id)
     if not blogs:
         return jsonify({"message": "Blog not found"}), 404
     data = request.json
@@ -88,7 +88,7 @@ def delete_blogs(id):
     '''
         deletes a blog
     '''
-    blogs = Blogs.query.get_or_404(id)
+    blogs = Blogs.query.get(id)
     if not blogs:
         return jsonify({"message": "Blog not found"}), 404
     db.session.delete(blogs)
