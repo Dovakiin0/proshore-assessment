@@ -1,7 +1,7 @@
 import os
 from flask import Flask
 from flask_cors import CORS
-from .models import db
+from .models import db, ma
 from dotenv import load_dotenv, find_dotenv
 from .routes.blogs import blogs
 
@@ -12,9 +12,11 @@ def createApp() -> Flask:
     app = Flask(__name__)
     load_dotenv(find_dotenv())
     app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("SQLALCHEMY_DATABASE_URI")
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     CORS(app)
     with app.app_context():
         db.init_app(app)
+        ma.init_app(app)
         db.create_all()
     
     app.register_blueprint(blogs, url_prefix="/api/v1/blogs")
