@@ -27,11 +27,16 @@
 	let page = 1;
 	let limit = 10;
 	let loading = false;
+	let sort = 'id';
+	let order = 'asc';
 
 	const fetchBlogs = async () => {
+		console.log(sort);
 		try {
 			const { data, status } = await axios.get(
-				`${import.meta.env.VITE_BLOGS_URI}/api/v1/blogs?page=${page}&limit=${limit}`
+				`${
+					import.meta.env.VITE_BLOGS_URI
+				}/api/v1/blogs?page=${page}&limit=${limit}&sort=${sort}&order=${order}`
 			);
 			if (status === 200) {
 				blogs = data;
@@ -98,6 +103,16 @@
 		page = num;
 		await fetchBlogs();
 	};
+
+	const setSort = async (value) => {
+		sort = value;
+		await fetchBlogs();
+	};
+
+	const setOrder = async (value) => {
+		order = value;
+		await fetchBlogs();
+	};
 </script>
 
 <div class="flex flex-col justify-center items-center">
@@ -129,5 +144,5 @@
 </div>
 
 <div class="flex flex-col justify-center items-center">
-	<Table {blogs} {next} {prev} {limit} {paginate} {setLimit} />
+	<Table {blogs} {next} {prev} {limit} {paginate} {setLimit} {setSort} {setOrder} />
 </div>

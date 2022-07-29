@@ -5,8 +5,12 @@
 	export let limit;
 	export let paginate;
 	export let setLimit;
+	export let setSort;
+	export let setOrder;
 
 	let post_per_page = limit.toString();
+	let sort = 'id';
+	let order = 'asc';
 
 	// function that generates the pagination ranges
 	const paginationGenerator = (current, last, width = 2) => {
@@ -51,41 +55,32 @@
 		<div>
 			<div class="overflow-x-auto relative shadow-md sm:rounded-lg">
 				<div class="flex justify-between items-center pb-4">
-					<div>
-						<button
-							id="dropdownRadioButton"
-							data-dropdown-toggle="dropdownRadio"
-							class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-							type="button"
+					<div class="ml-5 flex items-center space-x-3">
+						<p>Sort:</p>
+						<select
+							id="sort"
+							class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+							bind:value={sort}
+							on:change={() => setSort(sort)}
 						>
-							<svg
-								class="mr-2 w-4 h-4 text-gray-400"
-								aria-hidden="true"
-								fill="currentColor"
-								viewBox="0 0 20 20"
-								xmlns="http://www.w3.org/2000/svg"
-								><path
-									fill-rule="evenodd"
-									d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
-									clip-rule="evenodd"
-								/></svg
-							>
-							Filter
-							<svg
-								class="ml-2 w-3 h-3"
-								aria-hidden="true"
-								fill="none"
-								stroke="currentColor"
-								viewBox="0 0 24 24"
-								xmlns="http://www.w3.org/2000/svg"
-								><path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									stroke-width="2"
-									d="M19 9l-7 7-7-7"
-								/></svg
-							>
-						</button>
+							<option selected disabled>Filter by</option>
+							<option value="id">ID</option>
+							<option value="title">Title</option>
+							<option value="description">Description</option>
+							<option value="author_name">Author's Name</option>
+							<option value="author_description">Author's Description</option>
+							<option value="reading_time">Reading Time</option>
+						</select>
+						<select
+							id="order"
+							class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+							bind:value={order}
+							on:change={() => setOrder(order)}
+						>
+							<option selected disabled>Order By</option>
+							<option value="asc">asc</option>
+							<option value="desc">desc</option>
+						</select>
 						<!-- Dropdown menu -->
 					</div>
 					<label for="table-search" class="sr-only">Search</label>
@@ -117,7 +112,7 @@
 						class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
 					>
 						<tr>
-							<th scope="col" class="py-3 px-6"> Image </th>
+							<th scope="col" class="py-3 px-6" on:click={() => console.log('IMAGE')}> Image </th>
 							<th scope="col" class="py-3 px-6"> Title </th>
 							<th scope="col" class="py-3 px-6"> Description </th>
 							<th scope="col" class="py-3 px-6"> Author's Name </th>
@@ -168,7 +163,8 @@
 					>
 					to
 					<span class="font-semibold text-gray-900 dark:text-white"
-						>{(blogs && blogs.page * limit) || '??'}</span
+						>{(blogs && blogs.page * limit > blogs.total ? blogs.total : blogs.page * limit) ||
+							'??'}</span
 					>
 					of
 					<span class="font-semibold text-gray-900 dark:text-white"

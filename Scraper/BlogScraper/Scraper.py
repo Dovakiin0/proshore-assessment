@@ -56,7 +56,8 @@ def scrape_data(driver):
                 "image_url": image_url,
                 "reading_time": read_time
             }
-            blogs_list.append(scrapedBlog)
+            if title != "":
+                blogs_list.append(scrapedBlog)
         except Exception as e:
             print(e)
     return blogs_list

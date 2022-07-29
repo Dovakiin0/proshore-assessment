@@ -1,4 +1,6 @@
+from operator import contains, or_
 from flask import jsonify, request
+from sqlalchemy import asc, desc
 from ..models.blogs import Blogs, blog_schema, blogs_schema
 from ..models import db
 
@@ -48,8 +50,26 @@ def get_all_blogs():
     '''
     page = request.args.get('page', 1, type=int)
     limit = request.args.get('limit', 10, type=int)
+    search_str = request.args.get('search', "", type=str)
+    sort_str = request.args.get('sort', "id", type=str)
+    order_str = request.args.get('order', "asc", type=str)
 
-    blogs = Blogs.query.order_by(Blogs.id).paginate(page, limit, error_out=False)
+    sorts = {
+        "id": Blogs.id,
+        "title": Blogs.title,
+        "description": Blogs.description,
+        "author_name": Blogs.author_name,
+        "author_description": Blogs.author_description,
+        "reading_time": Blogs.reading_time
+    }
+
+    def get_asc_or_desc(str, sort_str):
+        if str == "asc":
+            return asc(sorts[sort_str])
+        else:
+            return desc(sorts[sort_str])
+
+    blogs = Blogs.query.order_by(get_asc_or_desc(order_str, sort_str)).paginate(page, limit, error_out=False)
     if not blogs.items:
         return jsonify({"message": "No blogs found"}), 404
     
