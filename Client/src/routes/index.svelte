@@ -24,12 +24,15 @@
 	export let blogs;
 	import Table from '../components/Table.svelte';
 	import Spinner from '../Utility/Spinner.svelte';
-
+	let page = 1;
+	let limit = 10;
 	let loading = false;
 
 	const fetchBlogs = async () => {
 		try {
-			const { data, status } = await axios.get(`${import.meta.env.VITE_BLOGS_URI}/api/v1/blogs`);
+			const { data, status } = await axios.get(
+				`${import.meta.env.VITE_BLOGS_URI}/api/v1/blogs?page=${page}&limit=${limit}`
+			);
 			if (status === 200) {
 				blogs = data;
 			}
@@ -68,6 +71,33 @@
 			console.log(err);
 		}
 	};
+
+	const setLimit = async (value) => {
+		if (blogs.page * value > blogs.total) {
+			page = Math.ceil(blogs.total / value);
+		} else {
+			page = blogs.page;
+		}
+		limit = value;
+		await fetchBlogs();
+	};
+
+	const next = async () => {
+		if (blogs.next === null) return;
+		page++;
+		await fetchBlogs();
+	};
+
+	const prev = async () => {
+		if (blogs.prev === null) return;
+		page--;
+		await fetchBlogs();
+	};
+
+	const paginate = async (num) => {
+		page = num;
+		await fetchBlogs();
+	};
 </script>
 
 <div class="flex justify-center items-center m-5">
@@ -104,6 +134,6 @@
 	{/if}
 </div>
 
-<div class="flex justify-center items-center">
-	<Table {blogs} />
+<div class="flex flex-col justify-center items-center">
+	<Table {blogs} {next} {prev} {limit} {paginate} {setLimit} />
 </div>

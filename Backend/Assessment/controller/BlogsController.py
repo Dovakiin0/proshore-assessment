@@ -44,8 +44,7 @@ def bulk_add():
 
 def get_all_blogs():
     '''
-        returns all blogs with pagination
-        takes pages and limit as query
+        returns all blogs with filters and pagination
     '''
     page = request.args.get('page', 1, type=int)
     limit = request.args.get('limit', 10, type=int)
