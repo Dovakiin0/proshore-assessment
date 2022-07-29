@@ -93,7 +93,7 @@
 	>
 	<div class="lg:flex justify-center items-center">
 		<div class="img-container">
-			<img src={blog.image_url} class="h-full p-10 object-cover" alt="pro-img" />
+			<img src={blog.blog_image_url} class="h-full p-10 object-cover" alt="pro-img" />
 			<p class="absolute right-10 bottom-10 p-2 bg-yellow-400 rounded-md">
 				Reading time: {blog.reading_time}
 			</p>
@@ -101,9 +101,14 @@
 		<div class="space-y-5 m-5">
 			<p class="text-3xl">{blog.title}</p>
 			<p class="text-md">{blog.description.replace('...', '')}</p>
-			<div class="float-right p-10">
-				<p class="text-lg font-bold">{blog.author_name}</p>
-				<p>{blog.author_description}</p>
+			<div class="float-right flex items-center p-10 space-x-5">
+				<div class="">
+					<img class="w-20 h-20 rounded-full" src={blog.image_url} alt="Rounded avatar" />
+				</div>
+				<div>
+					<p class="text-lg font-bold">{blog.author_name}</p>
+					<p>{blog.author_description}</p>
+				</div>
 			</div>
 			<div class="float-left space-x-2">
 				<button

@@ -7,10 +7,12 @@
 	export let setLimit;
 	export let setSort;
 	export let setOrder;
+	export let setKeyword;
 
 	let post_per_page = limit.toString();
 	let sort = 'id';
 	let order = 'asc';
+	let keyword = '';
 
 	// function that generates the pagination ranges
 	const paginationGenerator = (current, last, width = 2) => {
@@ -103,7 +105,9 @@
 							type="text"
 							id="table-search"
 							class="block p-2 pl-10 w-80 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-							placeholder="Search for items"
+							placeholder="Search for Keyword"
+							bind:value={keyword}
+							on:keyup={() => setKeyword(keyword)}
 						/>
 					</div>
 				</div>
@@ -112,7 +116,7 @@
 						class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
 					>
 						<tr>
-							<th scope="col" class="py-3 px-6" on:click={() => console.log('IMAGE')}> Image </th>
+							<th scope="col" class="py-3 px-6" on:click={() => console.log('IMAGE')}> Author </th>
 							<th scope="col" class="py-3 px-6"> Title </th>
 							<th scope="col" class="py-3 px-6"> Description </th>
 							<th scope="col" class="py-3 px-6"> Author's Name </th>
@@ -130,7 +134,7 @@
 									scope="row"
 									class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
 								>
-									<img src={blog.image_url} width="100" alt="image_url" />
+									<img class="w-10 h-10 rounded-full" src={blog.image_url} alt="Rounded avatar" />
 								</th>
 								<td class="py-4 px-6"> {blog.title || 'N/A'} </td>
 								<td class="py-4 px-6"> {blog.description || 'N/A'} </td>

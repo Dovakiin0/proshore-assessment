@@ -29,6 +29,7 @@
 	let loading = false;
 	let sort = 'id';
 	let order = 'asc';
+	let keyword = '';
 
 	const fetchBlogs = async () => {
 		console.log(sort);
@@ -36,7 +37,7 @@
 			const { data, status } = await axios.get(
 				`${
 					import.meta.env.VITE_BLOGS_URI
-				}/api/v1/blogs?page=${page}&limit=${limit}&sort=${sort}&order=${order}`
+				}/api/v1/blogs?page=${page}&limit=${limit}&sort=${sort}&order=${order}&keyword=${keyword}`
 			);
 			if (status === 200) {
 				blogs = data;
@@ -113,6 +114,11 @@
 		order = value;
 		await fetchBlogs();
 	};
+
+	const setKeyword = async (value) => {
+		keyword = value;
+		await fetchBlogs();
+	};
 </script>
 
 <div class="flex flex-col justify-center items-center">
@@ -144,5 +150,5 @@
 </div>
 
 <div class="flex flex-col justify-center items-center">
-	<Table {blogs} {next} {prev} {limit} {paginate} {setLimit} {setSort} {setOrder} />
+	<Table {blogs} {next} {prev} {limit} {paginate} {setLimit} {setSort} {setOrder} {setKeyword} />
 </div>

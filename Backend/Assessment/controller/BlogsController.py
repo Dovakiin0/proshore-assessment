@@ -1,6 +1,6 @@
 from operator import contains, or_
 from flask import jsonify, request
-from sqlalchemy import asc, desc
+from sqlalchemy import asc, desc, func
 from ..models.blogs import Blogs, blog_schema, blogs_schema
 from ..models import db
 
@@ -15,6 +15,7 @@ def add_blogs():
             description=data['description'],
             image_url=data['image_url'],
             author_name=data['author_name'],
+            blog_image_url=data['blog_image_url'],
             author_description=data['author_description'],
             reading_time=data['reading_time']
         )
@@ -36,6 +37,7 @@ def bulk_add():
             title=blog['title'],
             description=blog['description'],
             image_url=blog['image_url'],
+            blog_image_url=blog['blog_image_url'],
             author_name=blog['author_name'],
             author_description=blog['author_description'],
             reading_time=blog['reading_time']
@@ -50,7 +52,7 @@ def get_all_blogs():
     '''
     page = request.args.get('page', 1, type=int)
     limit = request.args.get('limit', 10, type=int)
-    search_str = request.args.get('search', "", type=str)
+    search_str = request.args.get('keyword', "", type=str)
     sort_str = request.args.get('sort', "id", type=str)
     order_str = request.args.get('order', "asc", type=str)
 
@@ -63,13 +65,16 @@ def get_all_blogs():
         "reading_time": Blogs.reading_time
     }
 
+    # function to decide whether to return asc or desc order
     def get_asc_or_desc(str, sort_str):
         if str == "asc":
             return asc(sorts[sort_str])
         else:
             return desc(sorts[sort_str])
-
-    blogs = Blogs.query.order_by(get_asc_or_desc(order_str, sort_str)).paginate(page, limit, error_out=False)
+    search_str = func.lower(search_str)
+    blogs = Blogs.query.order_by(get_asc_or_desc(order_str, sort_str)).filter(
+        func.lower(Blogs.title).contains(search_str) | func.lower(Blogs.description).contains(search_str) | func.lower(Blogs.author_description).contains(search_str) | func.lower(Blogs.author_name).contains(search_str) | func.lower(Blogs.reading_time).contains(search_str)
+        ).paginate(page, limit, error_out=False)
     if not blogs.items:
         return jsonify({"message": "No blogs found"}), 404
     
@@ -97,6 +102,7 @@ def update_blogs(id):
     blogs.title = data['title']
     blogs.description = data['description']
     blogs.image_url = data['image_url']
+    blogs.blog_image_url = data['blog_image_url']
     blogs.author_name = data['author_name']
     blogs.author_description = data['author_description']
     blogs.reading_time = data['reading_time']

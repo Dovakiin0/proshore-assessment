@@ -12,7 +12,7 @@ def createApp() -> Flask:
     app = Flask(__name__)
     load_dotenv(find_dotenv())
     app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("SQLALCHEMY_DATABASE_URI")
-    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
     CORS(app)
     with app.app_context():
         db.init_app(app)

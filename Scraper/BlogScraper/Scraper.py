@@ -43,7 +43,8 @@ def scrape_data(driver):
             description = item.find_element(By.CLASS_NAME,"playground-excerpt").text
             author_name = item.find_element(By.CLASS_NAME,"playground-author-name").text
             author_description = item.find_element(By.CLASS_NAME,"playground-author-description").text
-            image_url = item.find_element(By.CLASS_NAME,"playground-image").find_element(By.TAG_NAME, "img").get_attribute("src")
+            blog_image_url = item.find_element(By.CLASS_NAME,"playground-image").find_element(By.TAG_NAME, "img").get_attribute("src")
+            image_url = item.find_element(By.CLASS_NAME,"playground-author-image").find_element(By.TAG_NAME, "img").get_attribute("src")
             try:
                 read_time = item.find_element(By.CLASS_NAME,"playground-read-time-text").text
             except NoSuchElementException:
@@ -54,6 +55,7 @@ def scrape_data(driver):
                 "author_name" : author_name,
                 "author_description": author_description,
                 "image_url": image_url,
+                "blog_image_url": blog_image_url,
                 "reading_time": read_time
             }
             if title != "":
