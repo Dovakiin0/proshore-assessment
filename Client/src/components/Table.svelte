@@ -149,10 +149,6 @@
 											href={`/blogs/${blog.id}`}
 											class="font-medium text-blue-600 dark:text-blue-500 hover:underline">View</a
 										>
-										<span class="mx-2">|</span>
-										<a href="/" class="font-medium text-red-600 dark:text-red-500 hover:underline"
-											>Delete</a
-										>
 									</div>
 								</td>
 							</tr>
@@ -215,7 +211,7 @@
 							</svg>
 						</span>
 						<!-- Current: "z-10 bg-indigo-50 border-indigo-500 text-indigo-600", Default: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50" -->
-						{#each paginationGenerator(blogs.page, blogs.total / limit, 2) as page}
+						{#each paginationGenerator(blogs.page, Math.ceil(blogs.total / limit), 2) as page}
 							<span
 								on:click={() => paginate(page)}
 								aria-current="page"
