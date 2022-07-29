@@ -55,7 +55,7 @@ def get_all_blogs():
         return jsonify({"message": "No blogs found"}), 404
     
     result = blogs_schema.dump(blogs.items)
-    return jsonify({"data": result, "next": blogs.next_num, "prev": blogs.prev_num, "total": blogs.total}), 200
+    return jsonify({"data": result,"page":blogs.page, "next": blogs.next_num, "prev": blogs.prev_num, "total": blogs.total}), 200
 
 def get_single_blog(id):
     '''
@@ -94,3 +94,11 @@ def delete_blogs(id):
     db.session.delete(blogs)
     db.session.commit()
     return jsonify({"message": "Blog deleted successfully"}), 200
+
+def delete_all_blogs():
+    '''
+        deletes all blogs
+    '''
+    db.session.query(Blogs).delete()
+    db.session.commit()
+    return jsonify({"message": "All blogs deleted successfully"}), 200
