@@ -1,7 +1,7 @@
 <script context="module">
 	import axios from 'axios';
 	import { dev } from '$app/env';
-	let blog_uri = dev ? 'http://localhost:5050' : 'http://localhost:5050';
+	let blog_uri = dev ? 'http://localhost:5050' : 'http://103.195.4.17:5050';
 
 	export async function load({ url, params }) {
 		try {

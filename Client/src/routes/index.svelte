@@ -1,8 +1,8 @@
 <script context="module">
 	import axios from 'axios';
 	import { dev } from '$app/env';
-	let scraper_uri = dev ? 'http://Scraper:5000' : 'https://proshore-task.herokuapp.com:5000';
-	let blog_uri = dev ? 'http://Backend:5050' : 'https://proshore-task.herokuapp.com:5050';
+	let scraper_uri = dev ? 'http://Scraper:5000' : 'http://103.195.4.17:5000';
+	let blog_uri = dev ? 'http://Backend:5050' : 'http://103.195.4.17:5050';
 
 	export async function load({ url, params }) {
 		try {
