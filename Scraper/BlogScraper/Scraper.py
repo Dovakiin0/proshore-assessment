@@ -8,6 +8,8 @@ import time
 def init_driver(PATH):
     options = Options()
     options.add_argument("--headless")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
     driver = webdriver.Chrome(PATH, options=options)
     driver.get("https://proshore.eu/resources/")
     return driver

@@ -1,8 +1,12 @@
 <script context="module">
 	import axios from 'axios';
+	import { dev } from '$app/env';
+	let scraper_uri = dev ? 'http://Scraper:5000' : 'https://proshore-task.herokuapp.com:5000';
+	let blog_uri = dev ? 'http://Backend:5050' : 'https://proshore-task.herokuapp.com:5050';
+
 	export async function load({ url, params }) {
 		try {
-			const { data, status } = await axios.get(`${import.meta.env.VITE_BLOGS_URI}/api/v1/blogs`);
+			const { data, status } = await axios.get(`${blog_uri}/api/v1/blogs`);
 			if (status === 200) {
 				return {
 					props: {
@@ -32,26 +36,23 @@
 	let keyword = '';
 
 	const fetchBlogs = async () => {
-		console.log(sort);
 		try {
 			const { data, status } = await axios.get(
-				`${
-					import.meta.env.VITE_BLOGS_URI
-				}/api/v1/blogs?page=${page}&limit=${limit}&sort=${sort}&order=${order}&keyword=${keyword}`
+				`${blog_uri}/api/v1/blogs?page=${page}&limit=${limit}&sort=${sort}&order=${order}&keyword=${keyword}`
 			);
 			if (status === 200) {
 				blogs = data;
 			}
 		} catch (err) {
-			console.log(err);
 			blogs = null;
+			console.log(err);
 		}
 	};
 
 	const onScrape = async () => {
 		try {
 			const { data, status } = await axios.post(
-				`${import.meta.env.VITE_SCRAPER_URI}/api/v1/scrape`,
+				`${scraper_uri}/api/v1/scrape`,
 				{},
 				{ onDownloadProgress: (loading = true) }
 			);
@@ -67,9 +68,7 @@
 
 	const onDelete = async () => {
 		try {
-			const { data, status } = await axios.delete(
-				`${import.meta.env.VITE_BLOGS_URI}/api/v1/blogs/`
-			);
+			const { data, status } = await axios.delete(`${blog_uri}/api/v1/blogs/`);
 			if (status === 200) {
 				await fetchBlogs();
 			}

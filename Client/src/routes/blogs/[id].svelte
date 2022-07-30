@@ -1,11 +1,11 @@
 <script context="module">
 	import axios from 'axios';
+	import { dev } from '$app/env';
+	let blog_uri = dev ? 'http://localhost:5050' : 'http://localhost:5050';
 
 	export async function load({ url, params }) {
 		try {
-			const { data, status } = await axios.get(
-				`${import.meta.env.VITE_BLOGS_URI}/api/v1/blogs/${params.id}`
-			);
+			const { data, status } = await axios.get(`${blog_uri}/api/v1/blogs/${params.id}`);
 			if (status === 200) {
 				return {
 					props: {
@@ -34,9 +34,7 @@
 
 	const fetchBlog = async (id) => {
 		try {
-			const { data, status } = await axios.get(
-				`${import.meta.env.VITE_BLOGS_URI}/api/v1/blogs/${id}`
-			);
+			const { data, status } = await axios.get(`${blog_uri}/api/v1/blogs/${id}`);
 			if (status === 200) {
 				blog = data.data;
 			}
@@ -48,9 +46,7 @@
 
 	const onDelete = async (id) => {
 		try {
-			const { data, status } = await axios.delete(
-				`${import.meta.env.VITE_BLOGS_URI}/api/v1/blogs/${id}`
-			);
+			const { data, status } = await axios.delete(`${blog_uri}/api/v1/blogs/${id}`);
 			if (status === 200) {
 				goto('/', { replaceState: true });
 			}
@@ -63,10 +59,7 @@
 		let id = value.id;
 		delete value.id;
 		try {
-			const { data, status } = await axios.put(
-				`${import.meta.env.VITE_BLOGS_URI}/api/v1/blogs/${id}`,
-				value
-			);
+			const { data, status } = await axios.put(`${blog_uri}/api/v1/blogs/${id}`, value);
 			if (status === 200) {
 				fetchBlog(id);
 				editToggle = false;

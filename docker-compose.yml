@@ -1,0 +1,65 @@
+version: "3"
+services:
+  backend:
+    container_name: "Backend"
+    build:
+      context: ./Backend/
+      dockerfile: Dockerfile
+    environment:
+      - PYTHONPATH=Assessment
+      - SQLALCHEMY_DATABASE_URI=postgresql://postgres:postgresadmin@db:5432/proshore_assessment
+      - FLASK_APP=/
+    restart: always
+    ports:
+      - "5050:5050"
+    depends_on:
+      - db
+    
+  client:
+    container_name: "Client"
+    build:
+      context: ./Client/
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+  
+  scraper:
+    container_name: "Scraper"
+    build: 
+      context: ./Scraper/
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      - URI=http://Backend:5050
+    depends_on:
+      - db
+
+  nginx:
+    container_name: "Nginx-proshore"
+    build:
+      context: ./Nginx/
+      dockerfile: Dockerfile
+    ports:
+      - "3001:80"
+    depends_on:
+      - client
+      - backend
+      - scraper
+
+  db:
+    image: postgres:13.2-alpine
+    restart: always
+    container_name: "db"
+    ports:
+      - "5432"
+    environment:
+      - POSTGRES_DB=proshore_assessment
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgresadmin
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+volumes:
+  db-data:
