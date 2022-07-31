@@ -4,9 +4,9 @@ App that scrapes the entire blogs from the [Proshore website](https://proshore.e
 
 ### The technologies used for this project are as follows:
 
-- [Backend Service]() - Python with Flask
-- [Scraper Service]() - Python with Selenium
-- [Client Service]() - Sveltekit with vite
+- [Backend Service](https://github.com/Dovakiin0/proshore-assessment/tree/master/Backend#readme) - Python with Flask
+- [Scraper Service](https://github.com/Dovakiin0/proshore-assessment/tree/master/Client#readme) - Python with Selenium
+- [Client Service](https://github.com/Dovakiin0/proshore-assessment/tree/master/Scraper#readme) - Sveltekit with vite
 
 (Please refer to individual services for individual details)
 
@@ -33,7 +33,7 @@ However, to run without docker-compose, you must make sure to install the follow
 - Nodejs
 - Google Chrome (for Selenium driver to work)
 
-Then navigate into each of the services and rename .env.example and put in your database details.  
+Then navigate into each of the services and rename .env.example to .env and put in your database details.  
 Then use the following command to run the app locally.
 
 ```bash
