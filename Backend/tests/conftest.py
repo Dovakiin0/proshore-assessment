@@ -3,9 +3,11 @@ from ..Assessment import createApp
 from ..Assessment.models import db
 from ..Assessment.models.blogs import Blogs
 import os
-from dotenv import load_dotenv, find_dotenv
-
-load_dotenv(find_dotenv())
+try:
+    from dotenv import load_dotenv, find_dotenv
+    load_dotenv(find_dotenv())
+except:
+    print("Error loading module")
 
 @pytest.fixture(scope="session")
 def flask_app():

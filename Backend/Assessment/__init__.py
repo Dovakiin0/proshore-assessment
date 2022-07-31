@@ -10,7 +10,6 @@ def createApp(db_uri) -> Flask:
     '''
     app = Flask(__name__)
     app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
-    print(db_uri)
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
     CORS(app)
     with app.app_context():

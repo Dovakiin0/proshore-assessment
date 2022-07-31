@@ -8,7 +8,6 @@ services:
     environment:
       - PYTHONPATH=Assessment
       - SQLALCHEMY_DATABASE_URI=postgresql://postgres:postgresadmin@db:5432/proshore_assessment
-      - SQLALCHEMY_DATABASE_TEST_URI=postgresql://postgres:postgresadmin@test_db:5432/proshore_assessment_test
       - FLASK_APP=/
     restart: always
     ports:
@@ -37,6 +36,18 @@ services:
     depends_on:
       - db
 
+  nginx:
+    container_name: "Nginx-proshore"
+    build:
+      context: ./Nginx/
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - client
+      - backend
+      - scraper
+
   db:
     image: postgres:13.2-alpine
     restart: always
@@ -49,16 +60,6 @@ services:
       - POSTGRES_PASSWORD=postgresadmin
     volumes:
       - db-data:/var/lib/postgresql/data
-
-  test_db:
-    image: postgres:13.2-alpine
-    container_name: "test_db"
-    ports:
-      - "5432"
-    environment:
-      - POSTGRES_DB=proshore_assessment_test
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgresadmin
 
 volumes:
   db-data:
