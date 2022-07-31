@@ -9,6 +9,7 @@ services:
       - PYTHONPATH=Assessment
       - SQLALCHEMY_DATABASE_URI=postgresql://postgres:postgresadmin@db:5432/proshore_assessment
       - FLASK_APP=/
+      - MODE=PRODUCTION
     restart: always
     ports:
       - "5050:5050"

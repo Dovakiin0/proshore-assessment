@@ -10,7 +10,6 @@ services:
       - SQLALCHEMY_DATABASE_URI=postgresql://postgres:postgresadmin@db:5432/proshore_assessment
       - SQLALCHEMY_DATABASE_TEST_URI=postgresql://postgres:postgresadmin@test_db:5432/proshore_assessment_test
       - FLASK_APP=/
-      - MODE=PRODUCTION
     restart: always
     ports:
       - "5050:5050"
