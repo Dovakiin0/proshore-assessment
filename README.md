@@ -5,8 +5,8 @@ App that scrapes the entire blogs from the [Proshore website](https://proshore.e
 ### The technologies used for this project are as follows:
 
 - [Backend Service](https://github.com/Dovakiin0/proshore-assessment/tree/master/Backend#readme) - Python with Flask
-- [Scraper Service](https://github.com/Dovakiin0/proshore-assessment/tree/master/Client#readme) - Python with Selenium
-- [Client Service](https://github.com/Dovakiin0/proshore-assessment/tree/master/Scraper#readme) - Sveltekit with vite
+- [Scraper Service](https://github.com/Dovakiin0/proshore-assessment/tree/master/Scraper#readme) - Python with Selenium
+- [Client Service](https://github.com/Dovakiin0/proshore-assessment/tree/master/Client#readme) - Sveltekit with vite
 
 (Please refer to individual services for individual details)
 
