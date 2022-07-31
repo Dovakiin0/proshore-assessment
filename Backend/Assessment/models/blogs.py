@@ -13,6 +13,10 @@ class Blogs(db.Model):
     reading_time = db.Column(db.String(1000), nullable=False)
     blog_image_url = db.Column(db.String(1000), nullable=False)
 
+    __mapper_args__ = {
+        'confirm_deleted_rows': False
+    }
+
     def __repr__(self):
         return f"<Blog {self.id}>"
 

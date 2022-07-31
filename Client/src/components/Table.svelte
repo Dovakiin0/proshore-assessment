@@ -58,7 +58,7 @@
 					<p>Sort:</p>
 					<select
 						id="sort"
-						class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+						class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
 						bind:value={sort}
 						on:change={() => setSort(sort)}
 					>
@@ -72,7 +72,7 @@
 					</select>
 					<select
 						id="order"
-						class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+						class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
 						bind:value={order}
 						on:change={() => setOrder(order)}
 					>
@@ -86,7 +86,7 @@
 				<div class="relative">
 					<div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
 						<svg
-							class="w-5 h-5 text-gray-500 dark:text-gray-400"
+							class="w-5 h-5 text-gray-500"
 							aria-hidden="true"
 							fill="currentColor"
 							viewBox="0 0 20 20"
@@ -101,7 +101,7 @@
 					<input
 						type="text"
 						id="table-search"
-						class="block p-2 pl-10 w-80 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+						class="block p-2 pl-10 w-80 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
 						placeholder="Search for Keyword"
 						bind:value={keyword}
 						on:keyup={() => setKeyword(keyword)}
@@ -109,10 +109,8 @@
 				</div>
 			</div>
 			{#if blogs?.data}
-				<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-					<thead
-						class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
-					>
+				<table class="w-full text-sm text-left text-gray-500 ">
+					<thead class="text-xs text-gray-700 uppercase bg-gray-50">
 						<tr>
 							<th scope="col" class="py-3 px-6" on:click={() => console.log('IMAGE')}> Author </th>
 							<th scope="col" class="py-3 px-6"> Title </th>
@@ -125,13 +123,8 @@
 					</thead>
 					<tbody>
 						{#each blogs.data as blog}
-							<tr
-								class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-							>
-								<th
-									scope="row"
-									class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-								>
+							<tr class="bg-white border-b hover:bg-gray-50">
+								<th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
 									<img class="w-10 h-10 rounded-full" src={blog.image_url} alt="Rounded avatar" />
 								</th>
 								<td class="py-4 px-6"> {blog.title || 'N/A'} </td>
@@ -144,7 +137,7 @@
 										<a
 											sveltekit:prefetch={`/blogs/${blog.id}`}
 											href={`/blogs/${blog.id}`}
-											class="font-medium text-blue-600 dark:text-blue-500 hover:underline">View</a
+											class="font-medium text-blue-600 hover:underline">View</a
 										>
 									</div>
 								</td>
@@ -162,19 +155,17 @@
 		class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6"
 	>
 		<div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-			<span class="text-sm text-gray-700 dark:text-gray-400">
-				Showing <span class="font-semibold text-gray-900 dark:text-white"
+			<span class="text-sm text-gray-700">
+				Showing <span class="font-semibold text-gray-900"
 					>{(blogs && blogs?.page * limit - limit) || 1}</span
 				>
 				to
-				<span class="font-semibold text-gray-900 dark:text-white"
+				<span class="font-semibold text-gray-900"
 					>{(blogs && blogs?.page * limit > blogs?.total ? blogs?.total : blogs?.page * limit) ||
 						'??'}</span
 				>
 				of
-				<span class="font-semibold text-gray-900 dark:text-white"
-					>{(blogs && blogs?.total) || '??'}</span
-				> Entries
+				<span class="font-semibold text-gray-900">{(blogs && blogs?.total) || '??'}</span> Entries
 			</span>
 			<div class="flex space-x-2">
 				<p class="text-sm">Blogs Per Page:</p>
