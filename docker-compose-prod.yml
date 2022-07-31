@@ -61,5 +61,15 @@ services:
     volumes:
       - db-data:/var/lib/postgresql/data
 
+  test_db:
+    image: postgres:13.2-alpine
+    container_name: "test_db"
+    ports:
+      - "5432"
+    environment:
+      - POSTGRES_DB=proshore_assessment_test
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgresadmin
+
 volumes:
   db-data:
