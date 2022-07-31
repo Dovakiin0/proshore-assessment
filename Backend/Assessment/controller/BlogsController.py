@@ -22,7 +22,7 @@ def add_blogs():
         try:
             db.session.add(blogs)
             db.session.commit()
-            return jsonify({"message": "Blog added successfully", "data": data}), 201
+            return jsonify({"message": "Blog added successfully", "data": blog_schema.dump(blogs)}), 201
         except:
             return jsonify({"message": "Error adding blog"}), 500
 
@@ -44,7 +44,7 @@ def bulk_add():
         )
         db.session.add(blogs)
     db.session.commit()
-    return jsonify({"message": "Blogs added successfully"}), 201
+    return jsonify({"message": "Blogs added successfully", "data": data}), 201
 
 def get_all_blogs():
     '''
@@ -107,7 +107,7 @@ def update_blogs(id):
     blogs.author_description = data['author_description']
     blogs.reading_time = data['reading_time']
     db.session.commit()
-    return jsonify({"message": "Blog updated successfully", "data": data}), 200
+    return jsonify({"message": "Blog updated successfully", "data": blog_schema.dump(blogs)}), 200
 
 def delete_blogs(id):
     '''
