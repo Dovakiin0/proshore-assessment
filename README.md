@@ -14,7 +14,7 @@ App that scrapes the entire blogs from the [Proshore website](https://proshore.e
 
 This app is separated into multiple services. The Scraper service is responsible for scraping the data from the website and storing it in a database. The Backend service is responsible for providing api services to the frontend and the Client service is responsible for displaying the data in a table. Finally Nginx is used as reverse proxy to serve the app. All services works independently and are combined together in a container with docker to work as a single service.
 
-**The app has been deployed here: http://103.195.4.17/**
+~~**The app has been deployed here: http://103.195.4.17/**~~
 
 ### Local Development
 
